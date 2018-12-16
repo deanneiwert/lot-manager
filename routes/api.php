@@ -26,6 +26,6 @@ Route::prefix('auth')->group(function () {
 
 Route::group(['middleware' => 'auth:api'], function(){
     // Users
-    Route::get('users/{pageSize}', 'UserController@index')->middleware('isAdmin');
-    Route::get('users/{id}', 'UserController@show')->middleware('isAdminOrSelf');
+    Route::get('users/{pageSize}/{nameFilter?}', 'UserController@index')->middleware('isAdmin');
+    //Route::get('users/{id}', 'UserController@show')->middleware('isAdminOrSelf');
 });
