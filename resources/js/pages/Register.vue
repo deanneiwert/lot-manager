@@ -24,7 +24,8 @@
             :model="form"
             :rules="rules"
             label-width="130px"
-            @keyup.enter.native="submitForm()"
+            @keyup.enter.native="submitForm"
+            @submit.native.prevent
         >
             <el-row>
                 <el-col :span="12">

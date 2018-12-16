@@ -13,6 +13,20 @@
         <el-button @click="resetDateFilter">reset date filter</el-button>
         <el-button @click="clearFilter">reset all filters</el-button>
         -->
+        <el-form
+            ref="form"
+            label-width="130px"
+            @keyup.enter.native="filterChange"
+            @submit.native.prevent
+        >
+            <el-form-item label="Filter by Name">
+                <el-input
+                    v-model.trim="nameFilter"
+                    maxlength="30"
+                    @change="filterChange"
+                ></el-input>
+            </el-form-item>
+        </el-form>
         <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
@@ -60,6 +74,7 @@
     </div>
 </template>
 <script>
+import _ from 'lodash'
 export default {
     name: "Users",
     data () {
@@ -67,6 +82,7 @@ export default {
             has_error: false,
             usersData: null,
             pageSize: 15,
+            nameFilter: '',
             currentPage: 1,
             errors: null,
         }
@@ -83,6 +99,10 @@ export default {
         }
     },
     methods: {
+        // clicking enter while in name filter input can cause filterChange to be called twice, so let's debounce
+        filterChange: _.debounce(function () {
+            this.getUsers();
+        }, 500),
         resetDateFilter () {
             this.$refs.filterTable.clearFilter('date');
         },
@@ -110,7 +130,7 @@ export default {
         getUsers () {
             var app = this;
             app.$http({
-                url: `users/${app.pageSize}`,
+                url: `users/${app.pageSize}/${app.nameFilter}`,
                 method: 'GET',
                 params: { page: app.currentPage },
             })
