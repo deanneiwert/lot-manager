@@ -20,13 +20,12 @@ Implemented with Vue, Vue-Router, Axios, Vuex, Php, Laravel (with Eloquent), Ele
 5. [NPM](https://www.npmjs.com/get-npm)
 
 ### Download/Clone Repository
-Either manually download this folder structure onto your system or use git to clone the repository.  Scroll up and click "Clone or download".
+Either manually download this folder structure onto your system or use git to clone the repository.
 
 ### Database Configuration:
-For this project to function locally, a database must be created and be accessible with a username and password.  I recommend installing[MySQL Workbench](https://dev.mysql.com/downloads/workbench/), creating a new database, and creating a new user with a "Standard" authentication type and provide the user with a "DBA" administrative role.
-Note: you may need to update other 
+For this project to function locally, a database must be created and be accessible with a username and password.  I recommend installing [MySQL Workbench](https://dev.mysql.com/downloads/workbench/), creating a new database, creating a new user with a "Standard" authentication type, and providing the user with a "DBA" administrative role.
 1. Create database and corresponding user credentials
-2. Update the .env file at the root of the project with your database name and credentials:
+2. Update the .env file with your database name and credentials:
 ```
 DB_DATABASE=lot_manager
 DB_USERNAME=admin
@@ -48,12 +47,6 @@ npm install
 In order for this step to work, the database and credentials you created must be properly configured.
 ```
 php artisan migrate --seed
-```
-
-### Set a key for 
-Set the APP_KEY value in your .env file.  Laravel uses the key for all encrypted cookies, including the session cookie, before handing them off to the user's browser, and it uses it to decrypt cookies read from the browser. This prevents the client from making changes to their cookies and granting themselves admin privileges or impersonating another user in your application.
-```
-php artisan key:generate
 ```
 
 ### Compile JS and CSS:
