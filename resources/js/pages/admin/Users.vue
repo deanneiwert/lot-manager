@@ -29,6 +29,7 @@
             <el-table-column prop="name" label="Name" sortable></el-table-column>
             <el-table-column prop="email" label="Email" sortable></el-table-column>
             <el-table-column prop="role.name" label="Role" width="120" sortable></el-table-column>
+            <el-table-column prop="builder.name" label="Builder" width="150" sortable></el-table-column>
         </el-table>
     </div>
 </template>

@@ -11,8 +11,9 @@ class UserController extends Controller
         // filter on name field, then paginate
         $users = User::where('name', 'like', '%' . $nameFilter . '%')->paginate($pageSize);
 
-        // join role table to data to get role.name
+        // join role and builder table to data to get role.name and builder.name
         $users->load('role');
+        $users->load('builder');
 
         return response()->json(
             [

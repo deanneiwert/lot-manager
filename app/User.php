@@ -52,4 +52,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo('App\Role');
     }
+
+    /**
+     * Get the builder record associated with the user.
+     */
+    public function builder()
+    {
+        return $this->belongsTo('App\Builder');
+    }
 }
