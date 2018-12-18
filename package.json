@@ -20,12 +20,11 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
-        "@websanova/vue-auth": "^2.21.14-beta",
         "element-ui": "^2.4.11",
         "es6-promise": "^4.2.5",
         "node-sass": "^4.11.0",
         "sass-loader": "^7.1.0",
-        "vue-axios": "^2.1.4",
-        "vue-router": "^3.0.2"
+        "vue-router": "^3.0.2",
+        "vuex": "^3.0.1"
     }
 }

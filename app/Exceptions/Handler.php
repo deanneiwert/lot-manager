@@ -51,10 +51,9 @@ class Handler extends ExceptionHandler
         {
             $json = [
                 'success' => false,
-                'error' => [
-                    'code' => $exception->getCode(),
-                    'message' => $exception->getMessage(),
-                ],
+                'code' => $exception->getCode(),
+                'devMessage' => $exception->getMessage(),
+                'message' => 'Unknown error occurred',
             ];
 
             return response()->json($json, 500);

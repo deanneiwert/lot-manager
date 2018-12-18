@@ -6,6 +6,13 @@
             </nav>
         </header>
         <main class="el-main">
+            <el-alert
+                :type="alert.type"
+                :title="alert.message"
+                v-if="alert.message"
+                show-icon
+                :closable="false"
+            ></el-alert>
             <router-view></router-view>
         </main>
     </section>
@@ -13,6 +20,7 @@
 <script>
 import navigationMenu from './components/Menu.vue'
 export default {
+    name: "Index",
     data () {
         return {
             //
@@ -20,6 +28,17 @@ export default {
     },
     components: {
         navigationMenu
+    },
+    computed: {
+        alert () {
+            return this.$store.state.alert
+        }
+    },
+    watch: {
+        $route (to, from) {
+            // clear alert on location change
+            this.$store.dispatch('alert/clear');
+        }
     }
 }
 </script>
@@ -30,9 +49,6 @@ nav,
 main {
     max-width: 1100px;
     margin: auto;
-    h1 {
-        margin: 30px 0;
-    }
 }
 
 header {
@@ -46,11 +62,15 @@ header {
     }
 }
 
-main {
+main.el-main {
     width: 100%;
     background-color: #fff;
     border-radius: 0px 0px 12px 12px;
     margin-bottom: 50px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    padding-top: 50px;
+    h1 {
+        margin-bottom: 30px;
+    }
 }
 </style>

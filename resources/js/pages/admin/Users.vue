@@ -1,14 +1,6 @@
 <template>
     <div>
         <h1>Users</h1>
-        <el-alert
-            type="error"
-            title="Error, could not get the list of users"
-            :description="errors"
-            v-if="has_error"
-            show-icon
-            :closable="false"
-        ></el-alert>
         <!--
         <el-button @click="resetDateFilter">reset date filter</el-button>
         <el-button @click="clearFilter">reset all filters</el-button>
@@ -20,56 +12,23 @@
             @submit.native.prevent
         >
             <el-form-item label="Filter by Name">
-                <el-input
-                    v-model.trim="nameFilter"
-                    maxlength="30"
-                    @change="filterChange"
-                ></el-input>
+                <el-input v-model.trim="nameFilter" maxlength="30" @change="filterChange"></el-input>
             </el-form-item>
         </el-form>
         <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
+            :current-page.sync="page"
             :page-sizes="[5, 10, 15, 20, 25]"
             :page-size="pageSize"
             layout="total, prev, pager, next, jumper, sizes"
             :total="totalUsers"
-        >
-
-        </el-pagination>
-        <el-table
-            ref="filterTable"
-            :data="users"
-            style="width: 100%"
-        >
-            <el-table-column
-                prop="id"
-                label="ID"
-                column-key="user.id"
-                width="63"
-                sortable
-            >
-            </el-table-column>
-            <el-table-column
-                prop="name"
-                label="Name"
-                sortable
-            >
-            </el-table-column>
-            <el-table-column
-                prop="email"
-                label="Email"
-                sortable
-            >
-            </el-table-column>
-            <el-table-column
-                prop="role.name"
-                label="Role"
-                width="120"
-                sortable
-            >
-            </el-table-column>
+        ></el-pagination>
+        <el-table ref="filterTable" :data="users" style="width: 100%">
+            <el-table-column prop="id" label="ID" column-key="user.id" width="63" sortable></el-table-column>
+            <el-table-column prop="name" label="Name" sortable></el-table-column>
+            <el-table-column prop="email" label="Email" sortable></el-table-column>
+            <el-table-column prop="role.name" label="Role" width="120" sortable></el-table-column>
         </el-table>
     </div>
 </template>
@@ -79,24 +38,31 @@ export default {
     name: "Users",
     data () {
         return {
-            has_error: false,
-            usersData: null,
             pageSize: 15,
             nameFilter: '',
-            currentPage: 1,
-            errors: null,
+            page: 1,
         }
     },
     mounted () {
         this.getUsers()
     },
     computed: {
+        usersChunk () {
+            return this.$store.state.users.chunk;
+        },
+        users () {
+            return this.usersChunk ? this.usersChunk.data : null;
+        },
+        totalUsers () {
+            return this.usersChunk ? this.usersChunk.total : 0;
+        }
+        /*
         users () {
             return this.usersData ? this.usersData.data : null;
         },
         totalUsers () {
             return this.usersData ? this.usersData.total : 0;
-        }
+        }*/
     },
     methods: {
         // clicking enter while in name filter input can cause filterChange to be called twice, so let's debounce
@@ -124,10 +90,16 @@ export default {
             this.getUsers();
         },
         handleCurrentChange (val) {
-            this.currentPage = val;
+            this.page = val;
             this.getUsers();
         },
         getUsers () {
+            this.$store.dispatch('users/getUsers', {
+                pageSize: this.pageSize,
+                nameFilter: this.nameFilter,
+                page: this.page,
+            });
+            /*
             var app = this;
             app.$http({
                 url: `users/${app.pageSize}/${app.nameFilter}`,
@@ -145,6 +117,7 @@ export default {
                         app.errors = "An unknown error occurrred (code " + res.response.data.error.code + ")."
                     }
                 })
+            */
         }
     }
 }

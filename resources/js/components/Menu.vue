@@ -9,37 +9,20 @@
                 :router="true"
                 :default-active="activeLink"
             >
-                <el-menu-item
-                    index="home"
-                    route="/"
-                    class="logo"
-                ><img
-                        src="/images/logo_transparent.png"
-                        ref="logo"
-                    /></el-menu-item>
+                <el-menu-item index="home" route="/" class="logo">
+                    <img src="/images/logo_transparent.png" ref="logo">
+                </el-menu-item>
 
                 <!--SALES AGENT-->
-                <el-submenu
-                    v-if="$auth.check()"
-                    index="user"
-                >
+                <el-submenu v-if="roleCheck(2)" index="user">
                     <template slot="title">Sales Agent</template>
                     <el-menu-item index="dashboard">Dashboard</el-menu-item>
                 </el-submenu>
-                <!--ADMIN or SALES MANAGER-->
-                <el-submenu
-                    v-if="$auth.check(1)"
-                    index="admin"
-                >
+                <!--ADMIN -->
+                <el-submenu v-if="roleCheck(1)" index="admin">
                     <template slot="title">Admin</template>
-                    <el-menu-item
-                        index="admin.dashboard"
-                        route="/admin/dashboard"
-                    >Dashboard</el-menu-item>
-                    <el-menu-item
-                        index="admin.users"
-                        route="/admin/users"
-                    >Users</el-menu-item>
+                    <el-menu-item index="admin.dashboard" route="/admin/dashboard">Dashboard</el-menu-item>
+                    <el-menu-item index="admin.users" route="/admin/users">Users</el-menu-item>
                 </el-submenu>
             </el-menu>
         </el-col>
@@ -53,25 +36,9 @@
                 :default-active="activeLink2"
                 class="login-nav"
             >
-                <el-menu-item
-                    index="login"
-                    v-if="!$auth.check()"
-                    route="/login"
-                >Login</el-menu-item>
-                <el-menu-item
-                    index="register"
-                    v-if="!$auth.check()"
-                    route="/register"
-                >Register</el-menu-item>
-                <el-menu-item
-                    index="logout"
-                    v-if="$auth.check()"
-                >
-                    <a
-                        href="#"
-                        @click.prevent="$auth.logout()"
-                    >Logout</a>
-                </el-menu-item>
+                <el-menu-item index="login" v-if="!user" route="/login">Login</el-menu-item>
+                <el-menu-item index="register" v-if="!user" route="/register">Register</el-menu-item>
+                <el-menu-item index="logout" v-if="user" @click="logout">Logout</el-menu-item>
             </el-menu>
         </el-col>
     </el-row>
@@ -88,6 +55,21 @@ export default {
     mounted () {
         //
     },
+    methods: {
+        logout () {
+            this.$store.dispatch('auth/logout')
+                .then(() => this.$router.push('/'))
+                .catch(err => console.log(err));
+        },
+        roleCheck (roleId) {
+            return this.user && this.user.role_id === roleId;
+        },
+    },
+    computed: {
+        user () {
+            return this.$store.state.auth.user;
+        },
+    },
     beforeRouteEnter (to, from, next) {
         next(vm => {
             vm.activeLink = to.path
@@ -100,6 +82,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.user-name {
+    color: #fff;
+    vertical-align: middle;
+}
 .login-nav {
     float: right;
 }
