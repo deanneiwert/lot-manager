@@ -7,8 +7,9 @@ import Dashboard from './pages/user/Dashboard'
 import Admin from './pages/admin/Admin'
 import AdminDashboard from './pages/admin/Dashboard'
 import Users from './pages/admin/users'
-import _403 from './pages/403'
+import _401 from './pages/401'
 import _404 from './pages/404'
+import store from './store'
 
 // Routes
 const routes = [{
@@ -56,10 +57,6 @@ const routes = [{
         meta: {
             auth: {
                 roles: [1],
-                redirect: {
-                    name: 'login'
-                },
-                forbiddenRedirect: '/403'
             }
         },
         children: [{
@@ -76,9 +73,9 @@ const routes = [{
     },
     // OTHER ROUTES
     {
-        path: '/403',
-        name: '403',
-        component: _403,
+        path: '/401',
+        name: '401',
+        component: _401,
         meta: {
             auth: undefined
         }
@@ -102,4 +99,41 @@ const router = new VueRouter({
     mode: 'history',
     routes,
 })
+
+// set up a guard on the routes to leverage the meta data.
+router.beforeEach((to, from, next) => {
+
+    // get logged in user data if available
+    const user = store.state.auth.user;
+    const token = user ? user.token : null;
+    const role = user ? user.role_id : null;
+
+    if (to.matched.some(route => isUnauthenticatedRequest(route, token))){
+        next({ name: 'login' });
+    }
+    else if(to.matched.some(route => isUnautorizedRequest(route, role))){
+        next({ name: "401" });
+    }
+    //record.meta.roles || role.contains(record.meta.roles))){
+
+    next();
+})
+
+/**
+ * Checks route and determines if user needs to be authenticated
+ */
+function isUnauthenticatedRequest(route, token){
+    // no authorization is required, r
+    return route.meta.auth && !token;
+}
+
+/**
+ * Checks route against provided role to determine if authorized
+ */
+function isUnautorizedRequest(route, role){
+
+    let roles = route.meta.auth ? route.meta.auth.roles : null;
+    return roles && !roles.includes(role);
+}
+
 export default router;

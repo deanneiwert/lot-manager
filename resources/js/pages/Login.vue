@@ -2,14 +2,6 @@
     <div class="container">
         <div>
             <h1>Login</h1>
-            <el-alert
-                type="error"
-                title="There was an error logging in."
-                :description="errors"
-                v-if="error"
-                show-icon
-                :closable="false"
-            ></el-alert>
             <el-form
                 ref="form"
                 :model="form"
@@ -26,6 +18,8 @@
                     <el-input
                         v-model.trim="form.email"
                         type="email"
+                        autofocus="true"
+                        ref="email"
                     ></el-input>
                 </el-form-item>
                 <el-form-item
@@ -72,54 +66,19 @@ export default {
         }
     },
     mounted () {
-        //
+        this.$refs.email.focus();
     },
     methods: {
         submitForm () {
-            var app = this;
             this.$refs.form.validate((valid) => {
                 if (valid) {
-                    app.login();
+                    this.$store.dispatch('auth/login', this.form);
                 }
                 return valid;
             });
         },
-        login () {
-            // get the redirect object
-            var redirect = this.$auth.redirect()
-            var app = this
-            this.$auth.login({
-                params: {
-                    email: app.form.email,
-                    password: app.form.password
-                },
-                success: function () {
-                    app.error = false;
-                    app.errors = "";
-                    // handle redirection
-                    const redirectTo = redirect ? redirect.from.name : this.$auth.user().role_id === 1 ? 'admin.dashboard' : 'dashboard'
-                    this.$router.push({
-                        name: redirectTo
-                    })
-                },
-                error: function (resp) {
-                    app.error = true;
-                    app.errors = resp.response.data.error;
-
-                    // if this was a server error, don't show error details
-                    if (resp.response.status === 500) {
-                        app.errors = "An unknown error occurrred (code " + resp.response.data.error.code + ")."
-                    }
-                },
-                rememberMe: true,
-                fetchUser: true
-            })
-        }
-    }
+    },
 }
 </script>
 <style lang="scss" scoped>
-.el-alert--error {
-    margin-bottom: 10px;
-}
 </style>

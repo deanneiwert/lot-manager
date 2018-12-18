@@ -15,27 +15,35 @@ class AuthController extends Controller
             'password'  => 'required|min:3|confirmed',
             'name' => 'required|unique:users',
         ]);
-        if ($v->fails())
-        {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $v->errors()
-            ], 422);
+        if ($v->fails()) {
+            return response()->json([ 'status' => 'error', 'errors' => $v->errors()], 422);
         }
         $user = new User;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->name = $request->name;
         $user->save();
-        return response()->json(['status' => 'success'], 200);
+
+        // login in newly registered user
+        return $this->login($request);
     }
 
     public function login(Request $request) {
+        $v = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password'  => 'required',
+        ]);
+        if ($v->fails()) {
+            return response()->json(['status' => 'error','errors' => $v->errors()], 422);
+        }
         $credentials = $request->only('email', 'password');
         if ($token = $this->guard()->attempt($credentials)) {
-            return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+            $user = Auth::getUser();
+            $user->load('role');
+            $user->token = $token;
+            return response()->json($user, 200);
         }
-        return response()->json(['error' => 'Invalid credentials'], 401);
+        return response()->json(['status' => 'error', 'message' => 'Invalid credentials'], 401);
     }
 
     public function logout() {
