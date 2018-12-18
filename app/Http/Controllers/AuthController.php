@@ -40,6 +40,7 @@ class AuthController extends Controller
         if ($token = $this->guard()->attempt($credentials)) {
             $user = Auth::getUser();
             $user->load('role');
+            $user->load('builder');
             $user->token = $token;
             return response()->json($user, 200);
         }

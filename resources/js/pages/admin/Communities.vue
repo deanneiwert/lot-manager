@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Users</h1>
+        <h1>Communities</h1>
         <el-form
             ref="form"
             label-width="130px"
@@ -18,13 +18,14 @@
             :page-sizes="[5, 10, 15, 20, 25]"
             :page-size="pageSize"
             layout="total, prev, pager, next, jumper, sizes"
-            :total="totalUsers"
+            :total="totalCommunities"
         ></el-pagination>
-        <el-table ref="filterTable" :data="users" style="width: 100%">
+        <el-table ref="filterTable" :data="communities" style="width: 100%">
             <el-table-column prop="id" label="ID" column-key="user.id" width="63" sortable></el-table-column>
             <el-table-column prop="name" label="Name" sortable></el-table-column>
-            <el-table-column prop="email" label="Email" sortable></el-table-column>
-            <el-table-column prop="role.name" label="Role" width="120" sortable></el-table-column>
+            <el-table-column prop="city" label="City" sortable></el-table-column>
+            <el-table-column prop="state" label="State" sortable></el-table-column>
+            <el-table-column prop="zip" label="Zip" sortable></el-table-column>
             <el-table-column prop="builder.name" label="Builder" width="150" sortable></el-table-column>
         </el-table>
     </div>
@@ -32,7 +33,7 @@
 <script>
 
 export default {
-    name: "Users",
+    name: "Communities",
     data () {
         return {
             pageSize: 15,
@@ -41,34 +42,34 @@ export default {
         }
     },
     mounted () {
-        this.getUsers()
+        this.getCommunities()
     },
     computed: {
-        usersChunk () {
-            return this.$store.state.users.chunk;
+        communitiesChunk () {
+            return this.$store.state.communities.chunk;
         },
-        users () {
-            return this.usersChunk ? this.usersChunk.data : null;
+        communities () {
+            return this.communitiesChunk ? this.communitiesChunk.data : null;
         },
-        totalUsers () {
-            return this.usersChunk ? this.usersChunk.total : 0;
-        }        
+        totalCommunities () {
+            return this.communitiesChunk ? this.communitiesChunk.total : 0;
+        }
     },
     methods: {
         // clicking enter while in name filter input can cause filterChange to be called twice, so let's debounce
         filterChange: _.debounce(function () {
-            this.getUsers();
+            this.getCommunities();
         }, 500),
         handleSizeChange (val) {
             this.pageSize = val;
-            this.getUsers();
+            this.getCommunities();
         },
         handleCurrentChange (val) {
             this.page = val;
-            this.getUsers();
+            this.getCommunities();
         },
-        getUsers () {
-            this.$store.dispatch('users/getUsers', {
+        getCommunities () {
+            this.$store.dispatch('communities/getCommunities', {
                 pageSize: this.pageSize,
                 nameFilter: this.nameFilter,
                 page: this.page,

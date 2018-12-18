@@ -1,15 +1,16 @@
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 // Pages
-import Home from './pages/Home'
-import Register from './pages/Register'
-import Login from './pages/Login'
-import Dashboard from './pages/user/Dashboard'
-import Admin from './pages/admin/Admin'
-import AdminDashboard from './pages/admin/Dashboard'
-import Users from './pages/admin/users'
-import _401 from './pages/401'
-import _404 from './pages/404'
-import store from './store'
+import Home from './pages/Home';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Dashboard from './pages/user/Dashboard';
+import Admin from './pages/admin/Admin';
+import AdminDashboard from './pages/admin/Dashboard';
+import Users from './pages/admin/users';
+import Communities from './pages/admin/communities';
+import _401 from './pages/401';
+import _404 from './pages/404';
+import store from './store';
 
 // Routes
 const routes = [{
@@ -68,6 +69,11 @@ const routes = [{
                 path: 'users',
                 name: 'admin.users',
                 component: Users,
+            },
+            {
+                path: 'communities',
+                name: 'admin.communities',
+                component: Communities,
             }
         ]
     },

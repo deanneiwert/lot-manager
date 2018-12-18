@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import auth from './modules/auth';
 import users from './modules/users';
+import communities from './modules/communities';
 import {
     alert
 } from './modules/alert';
@@ -15,9 +16,10 @@ export default new Vuex.Store({
 
     },
     modules: {
-        auth,
-        users,
         alert,
+        auth,
+        communities,
+        users,
     },
     getters: {
 

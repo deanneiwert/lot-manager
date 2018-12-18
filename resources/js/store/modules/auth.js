@@ -71,7 +71,12 @@ export default {
                 .then(
                     user => {
                         commit('loginSuccess', user);
-                        router.push('/');
+                        if (user.role_id === 1){
+                            router.push({name: 'admin.dashboard'});
+                        }
+                        else {
+                            router.push({name: 'dashboard'});
+                        }
                     },
                     error => {
                         commit('loginFailure');

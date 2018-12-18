@@ -1,10 +1,7 @@
 import axios from 'axios';
 import {
-    errorHandler
+    errorHandler, authHeader
 } from '../_helpers';
-import {
-    authHeader
-} from '../_helpers'
 
 export const userService = {
     login,
