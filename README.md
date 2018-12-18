@@ -8,19 +8,19 @@ Features include:
 ## Setup Instructions:
 
 ### Prerequisites:
-    1. Database (i.e. [MySQL](https://www.mysql.com/), [Postgres](https://www.postgresql.org/), [SQL Server](https://www.microsoft.com/en-us/sql-server), or [SQLite](https://www.sqlite.org/index.html))
-    2. [Php](http://php.net/)
-    3. [Laravel](https://laravel.com/)
-    4. [NPM](https://www.npmjs.com/get-npm)
+1. Database (i.e. [MySQL](https://www.mysql.com/), [Postgres](https://www.postgresql.org/), [SQL Server](https://www.microsoft.com/en-us/sql-server), or [SQLite](https://www.sqlite.org/index.html))
+2. [Php](http://php.net/)
+3. [Laravel](https://laravel.com/)
+4. [NPM](https://www.npmjs.com/get-npm)
 
 ### Database Configuration:
-	1. Create database and corresponding user credentials
-	2. Update .env file with your database name and credentials:
-    ```
-    DB_DATABASE=lot_manager
-	DB_USERNAME=admin
-	DB_PASSWORD=admin
-    ```
+1. Create database and corresponding user credentials
+2. Update .env file with your database name and credentials:
+```
+DB_DATABASE=lot_manager
+DB_USERNAME=admin
+DB_PASSWORD=admin
+```
 
 ### Database Migrations and Seeding:
 ```
