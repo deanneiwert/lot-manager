@@ -1,19 +1,28 @@
 # lot-manager
 
-## Prerequisites:
-    1. Database (i.e. SQL, MySQL, etc.)
-    2. Php
-    3. Laravel
-    4. NPM
+Lot Manager is a sample project
 
-## Database Configuration:
+Features include:
+1. Ability to 
+
+## Setup Instructions:
+
+### Prerequisites:
+    1. Database (i.e. [MySQL](https://www.mysql.com/), [Postgres](https://www.postgresql.org/), [SQL Server](https://www.microsoft.com/en-us/sql-server), or [SQLite](https://www.sqlite.org/index.html))
+    2. [Php](http://php.net/)
+    3. [Laravel](https://laravel.com/)
+    4. [NPM](https://www.npmjs.com/get-npm)
+
+### Database Configuration:
 	1. Create database and corresponding user credentials
-	2. Update .env with database name and credentials:
+	2. Update .env file with your database name and credentials:
+    ```
     DB_DATABASE=lot_manager
 	DB_USERNAME=admin
 	DB_PASSWORD=admin
+    ```
 
-### Database Seeding:
+### Database Migrations and Seeding:
 ```
 php artisan migrate --seed
 ```
@@ -36,3 +45,18 @@ npm run watch
 ```
 php artisan serve
 ```
+
+### Logging in
+
+#### Login as Admin
+1. Navigate to http://locahost:8000/
+2. Click Login
+3. Enter "admin@test.com" as E-mail
+4. Enter "admin" as password
+
+#### Login as Sales Agent
+1. Navigate to http://locahost:8000/
+2. Click Login
+3. Enter "sales@test.com" as E-mail
+4. Enter "sales" as password
+ 
