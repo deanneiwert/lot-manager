@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             BuildersTableSeeder::class,
             UsersTableSeeder::class,
             CommunitiesTableSeeder::class,
+            CommunityAssignmentsTableSeeder::class,
         ]);
     }
 }

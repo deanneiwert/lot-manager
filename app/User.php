@@ -60,4 +60,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo('App\Builder');
     }
+
+    /**
+     * get the assignments associated with this user
+     */
+    public function communityAssignment()
+    {
+        return $this->hasMany('App\CommunityAssignment');
+    }
 }

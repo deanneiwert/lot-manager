@@ -13,4 +13,12 @@ class Community extends Model
     {
         return $this->belongsTo('App\Builder');
     }
+
+    /**
+     * get the assignments associated with this community
+     */
+    public function communityAssignment()
+    {
+        return $this->hasMany('App\CommunityAssignment');
+    }
 }

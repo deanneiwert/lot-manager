@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 50)->create();
+        factory(App\User::class, 500)->create();
         User::create([
             'name' => 'Admin',
             'email' => 'admin@test.com',

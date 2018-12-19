@@ -7,6 +7,7 @@ Features include:
 2. Logoff
 3. Register as sales agent
 4. View all registered users (admin login only)
+5. View all communities (admin login only)
 
 Implemented with Vue, Vue-Router, Axios, Vuex, Php, Laravel (with Eloquent), Element-UI, SASS
 
