@@ -24,6 +24,7 @@
                     <el-menu-item index="admin.dashboard" route="/admin/dashboard">Dashboard</el-menu-item>
                     <el-menu-item index="admin.users" route="/admin/users">Users</el-menu-item>
                     <el-menu-item index="admin.communities" route="/admin/communities">Communities</el-menu-item>
+                    <el-menu-item index="admin.lot-statuses" route="/admin/lot-statuses">Lot Statuses</el-menu-item>
                 </el-submenu>
             </el-menu>
         </el-col>

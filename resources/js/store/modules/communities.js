@@ -42,6 +42,9 @@ export default {
                 .then(
                     CommunitiesChunk => {
                         commit('getCommunitiesSuccess', CommunitiesChunk);
+                        dispatch('alert/clear', '', {
+                            root: true
+                        });
                     },
                     error => {
                         commit('getCommunitiesFailure');

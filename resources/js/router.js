@@ -6,8 +6,9 @@ import Login from './pages/Login';
 import Dashboard from './pages/user/Dashboard';
 import Admin from './pages/admin/Admin';
 import AdminDashboard from './pages/admin/Dashboard';
-import Users from './pages/admin/users';
-import Communities from './pages/admin/communities';
+import Users from './pages/admin/Users';
+import Communities from './pages/admin/Communities';
+import LotStatuses from './pages/admin/LotStatuses';
 import _401 from './pages/401';
 import _404 from './pages/404';
 import store from './store';
@@ -74,6 +75,11 @@ const routes = [{
                 path: 'communities',
                 name: 'admin.communities',
                 component: Communities,
+            },
+            {
+                path: 'lot-statuses',
+                name: 'admin.lot-statuses',
+                component: LotStatuses,
             }
         ]
     },

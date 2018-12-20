@@ -1,4 +1,4 @@
-export const alert = {
+export default {
     namespaced: true,
     state: {
         type: null,

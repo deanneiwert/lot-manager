@@ -20,8 +20,8 @@
             layout="total, prev, pager, next, jumper, sizes"
             :total="totalCommunities"
         ></el-pagination>
-        <el-table ref="filterTable" :data="communities" style="width: 100%">
-            <el-table-column prop="id" label="ID" column-key="user.id" width="63" sortable></el-table-column>
+        <el-table ref="communityTable" :data="communities" style="width: 100%">
+            <el-table-column prop="id" label="ID" column-key="id" width="63" sortable></el-table-column>
             <el-table-column prop="name" label="Name" sortable></el-table-column>
             <el-table-column label="Location" :formatter="formatLocation" sortable></el-table-column>
             <el-table-column prop="community_assignment" label="Assignment" width="300px">

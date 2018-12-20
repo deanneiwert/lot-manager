@@ -13,4 +13,12 @@ class Builder extends Model
     {
         return $this->hasMany('App\Community');
     }
+
+    /**
+     * Get the lot status records associated with the builder.
+     */
+    public function lotStatuses()
+    {
+        return $this->hasMany('App\LotStatus');
+    }
 }

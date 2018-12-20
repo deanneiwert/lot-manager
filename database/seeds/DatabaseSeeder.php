@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             CommunitiesTableSeeder::class,
             CommunityAssignmentsTableSeeder::class,
+            LotStatusesTableSeeder::class,
         ]);
     }
 }

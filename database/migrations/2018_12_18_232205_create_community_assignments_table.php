@@ -23,7 +23,7 @@ class CreateCommunityAssignmentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
 
             // keep community and user unique
-            $table->index(['community_id', 'user_id']);
+            $table->unique(['community_id', 'user_id']);
         });
     }
 

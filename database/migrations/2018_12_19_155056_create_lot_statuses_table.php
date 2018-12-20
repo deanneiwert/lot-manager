@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommunitiesTable extends Migration
+class CreateLotStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateCommunitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('communities', function (Blueprint $table) {
+        Schema::create('lot_statuses', function (Blueprint $table) {
             $table->increments('id');
+            $table->smallInteger('order');
             $table->string('name');
-	        $table->string('city');
-            $table->string('state');
-            $table->string('zip');
             $table->unsignedInteger('builder_id');
             $table->timestamps();
+
             $table->foreign('builder_id')->references('id')->on('builders');
 
-            // keep community and builder unique
-            $table->unique(['name', 'builder_id']);
+            // keep community and user unique
+            $table->unique(['builder_id', 'name']);
         });
     }
 
@@ -35,6 +34,6 @@ class CreateCommunitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('communities');
+        Schema::dropIfExists('lot_statuses');
     }
 }
