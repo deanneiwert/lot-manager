@@ -20,18 +20,19 @@
             layout="total, prev, pager, next, jumper, sizes"
             :total="totalCommunities"
         ></el-pagination>
-        <el-table ref="communityTable" :data="communities" style="width: 100%">
-            <el-table-column prop="id" label="ID" column-key="id" width="63" sortable></el-table-column>
-            <el-table-column prop="name" label="Name" sortable></el-table-column>
-            <el-table-column label="Location" :formatter="formatLocation" sortable></el-table-column>
-            <el-table-column prop="community_assignment" label="Assignment" width="300px">
+        <el-table ref="communityTable" :data="communities">
+
+            <el-table-column prop="name" label="Name" sortable fixed width="200"></el-table-column>
+            <el-table-column label="Location" :formatter="formatLocation" sortable width="200"></el-table-column>
+            <el-table-column prop="community_assignment" label="Assignment" width="320">
                 <template slot-scope="scope">
                     <div v-for="assignment in scope.row.community_assignment" class="smaller-text">
                         {{assignment.user.role.name}} - {{assignment.user.name}}
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="builder.name" label="Builder" width="200" sortable></el-table-column>
+            <el-table-column prop="builder.name" label="Builder" width="250" sortable></el-table-column>
+            <el-table-column prop="id" label="ID" column-key="id" width="63" sortable></el-table-column>
         </el-table>
     </div>
 </template>
@@ -88,7 +89,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .el-pagination {
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
     border-bottom: 1px solid #ebeef5;
+    justify-content: center;
 }
+
+</style>
+<style lang="scss">
+.el-pagination span.el-pagination__total:not([class*=suffix]){
+        display: block;
+        min-width: 100%;
+        font-weight: 700;
+    }
+
 </style>

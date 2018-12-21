@@ -10,7 +10,7 @@
             @submit.native.prevent
         >
             <el-row>
-                <el-col :span="12">
+                <el-col :md="12">
                     <el-form-item label="First Name" prop="firstName">
                         <el-input
                             v-model.trim="form.firstName"
@@ -20,7 +20,7 @@
                         ></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="12">
+                <el-col :md="12">
                     <el-form-item label="Last Name" prop="lastName">
                         <el-input v-model.trim="form.lastName" maxlength="30"></el-input>
                     </el-form-item>
@@ -30,7 +30,7 @@
                         <el-input v-model.trim="form.email" type="email" maxlength="50"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="12">
+                <el-col :md="12">
                     <el-form-item label="Password" prop="password">
                         <el-input
                             v-model="form.password"
@@ -40,7 +40,7 @@
                         ></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="12">
+                <el-col :md="12">
                     <el-form-item label="Verify Password" prop="password_confirmation">
                         <el-input
                             v-model="form.password_confirmation"

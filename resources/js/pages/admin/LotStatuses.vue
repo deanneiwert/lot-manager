@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Lot Statuses</h1>
+        <h1>Lot Status</h1>
         <el-form
             ref="form"
             label-width="130px"

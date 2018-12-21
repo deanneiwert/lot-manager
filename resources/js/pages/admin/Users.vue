@@ -20,12 +20,12 @@
             layout="total, prev, pager, next, jumper, sizes"
             :total="totalUsers"
         ></el-pagination>
-        <el-table ref="filterTable" :data="users" style="width: 100%">
-            <el-table-column prop="id" label="ID" column-key="user.id" width="63" sortable></el-table-column>
-            <el-table-column prop="name" label="Name" sortable></el-table-column>
-            <el-table-column prop="email" label="Email" sortable></el-table-column>
+        <el-table :data="users">
+            <el-table-column prop="name" label="Name" sortable fixed width="200"></el-table-column>
+            <el-table-column prop="email" label="Email" sortable width="400"></el-table-column>
             <el-table-column prop="role.name" label="Role" width="120" sortable></el-table-column>
-            <el-table-column prop="builder.name" label="Builder" width="150" sortable></el-table-column>
+            <el-table-column prop="builder.name" label="Builder" width="250" sortable></el-table-column>
+            <el-table-column prop="id" label="ID" column-key="user.id" width="63" sortable></el-table-column>
         </el-table>
     </div>
 </template>
@@ -79,7 +79,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .el-pagination {
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
     border-bottom: 1px solid #ebeef5;
+    justify-content: center;
 }
+
+</style>
+<style lang="scss">
+.el-pagination span.el-pagination__total:not([class*=suffix]){
+        display: block;
+        min-width: 100%;
+        font-weight: 700;
+    }
+
 </style>
