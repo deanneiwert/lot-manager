@@ -7,11 +7,11 @@ Features include:
 2. Logoff
 3. Register as sales agent
 4. Admin functions
-    a. View all registered users
-    b. View all communities
-    c. View all lots for a community
-    d. View the lot status options for each builder
-    e. Change the order of the lot status options
+    1. View all registered users
+    2. View all communities
+    3. View all lots for a community
+    4. View the lot status options for each builder
+    5. Change the order of the lot status options
 
 
 Implemented with Vue, Vue-Router, Axios, Vuex, Php, Laravel (with Eloquent), Element-UI, SASS
