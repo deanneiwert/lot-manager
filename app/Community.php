@@ -21,4 +21,12 @@ class Community extends Model
     {
         return $this->hasMany('App\CommunityAssignment');
     }
+
+    /**
+     * get the lots associated with this community
+     */
+    public function lots()
+    {
+        return $this->hasMany('App\Lot');
+    }
 }

@@ -6,8 +6,13 @@ Features include:
 1. Login as admin or sales agent
 2. Logoff
 3. Register as sales agent
-4. View all registered users (admin login only)
-5. View all communities (admin login only)
+4. Admin functions
+    a. View all registered users
+    b. View all communities
+    c. View all lots for a community
+    d. View the lot status options for each builder
+    e. Change the order of the lot status options
+
 
 Implemented with Vue, Vue-Router, Axios, Vuex, Php, Laravel (with Eloquent), Element-UI, SASS
 
@@ -45,7 +50,7 @@ npm install
 ```
 
 ### Database Migrations and Seeding:
-In order for this step to work, the database and credentials you created must be properly configured.
+In order for this step to work, the database and credentials you created must be properly configured.  This step will take a few minutes.
 ```
 php artisan migrate --seed
 ```

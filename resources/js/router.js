@@ -9,6 +9,7 @@ import AdminDashboard from './pages/admin/Dashboard';
 import Users from './pages/admin/Users';
 import Communities from './pages/admin/Communities';
 import LotStatuses from './pages/admin/LotStatuses';
+import Lots from './pages/admin/Lots';
 import _401 from './pages/401';
 import _404 from './pages/404';
 import store from './store';
@@ -80,6 +81,10 @@ const routes = [{
                 path: 'lot-statuses',
                 name: 'admin.lot-statuses',
                 component: LotStatuses,
+            }, {
+                path: 'lots',
+                name: 'admin.lots',
+                component: Lots,
             }
         ]
     },
@@ -120,11 +125,14 @@ router.beforeEach((to, from, next) => {
     const token = user ? user.token : null;
     const role = user ? user.role_id : null;
 
-    if (to.matched.some(route => isUnauthenticatedRequest(route, token))){
-        next({ name: 'login' });
-    }
-    else if(to.matched.some(route => isUnautorizedRequest(route, role))){
-        next({ name: "401" });
+    if (to.matched.some(route => isUnauthenticatedRequest(route, token))) {
+        next({
+            name: 'login'
+        });
+    } else if (to.matched.some(route => isUnautorizedRequest(route, role))) {
+        next({
+            name: "401"
+        });
     }
     //record.meta.roles || role.contains(record.meta.roles))){
 
@@ -134,7 +142,7 @@ router.beforeEach((to, from, next) => {
 /**
  * Checks route and determines if user needs to be authenticated
  */
-function isUnauthenticatedRequest(route, token){
+function isUnauthenticatedRequest(route, token) {
     // no authorization is required, r
     return route.meta.auth && !token;
 }
@@ -142,7 +150,7 @@ function isUnauthenticatedRequest(route, token){
 /**
  * Checks route against provided role to determine if authorized
  */
-function isUnautorizedRequest(route, role){
+function isUnautorizedRequest(route, role) {
 
     let roles = route.meta.auth ? route.meta.auth.roles : null;
     return roles && !roles.includes(role);

@@ -8,11 +8,9 @@ export default {
     state: {
         status: {},
         chunk: null,
-        options: {
-            pageSize: 15,
-            nameFilter: '',
-            page: 1,
-        },
+        options: null,
+        currentCommunityId: null,
+        lots: null
     },
     mutations: {
         getCommunitiesRequest(state, options) {
@@ -30,9 +28,32 @@ export default {
         getCommunitiesFailure(state) {
             state.status = {};
             state.chunk = null;
-        }
+        },
+        getLotsRequest(state) {
+            state.status = {
+                gettingLots: true
+            };
+        },
+        getLotsSuccess(state, Lots) {
+            state.status = {
+                LotsRetrieved: true
+            };
+            state.lots = Lots;
+        },
+        getLotsFailure(state) {
+            state.status = {};
+            state.lots = null;
+        },
+        setCommunity(state, communityId) {
+            state.currentCommunityId = communityId;
+        },
     },
     actions: {
+        setCurrentCommunity({
+            commit
+        }, communityId) {
+            commit('setCommunity', communityId);
+        },
         getCommunities({
             dispatch,
             commit
@@ -54,5 +75,26 @@ export default {
                     }
                 );
         },
+        getLots({
+            dispatch,
+            commit
+        }, communityId) {
+            commit('getLotsRequest');
+            communityService.getLots(communityId)
+                .then(
+                    Lots => {
+                        commit('getLotsSuccess', Lots);
+                        dispatch('alert/clear', '', {
+                            root: true
+                        });
+                    },
+                    error => {
+                        commit('getLotsFailure');
+                        dispatch('alert/error', error.message, {
+                            root: true
+                        });
+                    }
+                );
+        }
     }
 }

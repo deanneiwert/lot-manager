@@ -21,14 +21,15 @@
             :total="totalCommunities"
         ></el-pagination>
         <el-table ref="communityTable" :data="communities">
-
             <el-table-column prop="name" label="Name" sortable fixed width="200"></el-table-column>
             <el-table-column label="Location" :formatter="formatLocation" sortable width="200"></el-table-column>
             <el-table-column prop="community_assignment" label="Assignment" width="320">
                 <template slot-scope="scope">
-                    <div v-for="assignment in scope.row.community_assignment" class="smaller-text">
-                        {{assignment.user.role.name}} - {{assignment.user.name}}
-                    </div>
+                    <div
+                        v-for="assignment in scope.row.community_assignment"
+                        class="smaller-text"
+                        v-bind:key="assignment.id"
+                    >{{assignment.user.role.name}} - {{assignment.user.name}}</div>
                 </template>
             </el-table-column>
             <el-table-column prop="builder.name" label="Builder" width="250" sortable></el-table-column>
@@ -81,7 +82,7 @@ export default {
                 page: this.page,
             });
         },
-        formatLocation(row, col){
+        formatLocation (row, col) {
             return row.city + ', ' + row.state;
         }
     }
@@ -94,13 +95,11 @@ export default {
     border-bottom: 1px solid #ebeef5;
     justify-content: center;
 }
-
 </style>
 <style lang="scss">
-.el-pagination span.el-pagination__total:not([class*=suffix]){
-        display: block;
-        min-width: 100%;
-        font-weight: 700;
-    }
-
+.el-pagination span.el-pagination__total:not([class*="suffix"]) {
+    display: block;
+    min-width: 100%;
+    font-weight: 700;
+}
 </style>

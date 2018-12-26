@@ -8,7 +8,6 @@ export default {
     state: {
         status: {},
         lotStatuses: null,
-        builderId: null
     },
     mutations: {
         getLotStatusesRequest(state) {
@@ -26,10 +25,7 @@ export default {
             state.status = {};
             state.lotStatuses = null;
         },
-        setBuilder(state, builderId){
-            state.builderId = builderId;
-        },
-        setLotStatusesRequest(state, LotStatuses){
+        setLotStatusesRequest(state, LotStatuses) {
             state.status = {
                 settingLotStatuses: true
             }
@@ -46,16 +42,17 @@ export default {
         },
     },
     actions: {
-        setBuilder({ commit }, builderId){
-            commit('setBuilder', builderId);
-        },
-        getLotStatuses({ dispatch, commit, state }) {
+        getLotStatuses({
+            dispatch,
+            commit,
+            rootState,
+        }) {
             commit('getLotStatusesRequest');
-            lotStatusService.getLotStatuses(state.builderId)
+            lotStatusService.getLotStatuses(rootState.builders.currentBuilderId)
                 .then(
                     LotStatuses => {
                         commit('getLotStatusesSuccess', LotStatuses);
-                        dispatch('alert/clear', '',  {
+                        dispatch('alert/clear', '', {
                             root: true
                         });
                     },
@@ -67,12 +64,21 @@ export default {
                     }
                 );
         },
-        setLotStatuses({ dispatch, commit, state }, LotStatuses){
+        setLotStatuses({
+            dispatch,
+            commit,
+            rootState
+        }, LotStatuses) {
             let original = this.state.lotStatuses.lotStatuses;
             commit('setLotStatusesRequest', LotStatuses);
-    
-            let statusData = _.map(LotStatuses, function(status){return {id: status.id, name: status.name}});
-            lotStatusService.setLotStatuses(statusData, state.builderId)
+
+            let statusData = _.map(LotStatuses, function (status) {
+                return {
+                    id: status.id,
+                    name: status.name
+                }
+            });
+            lotStatusService.setLotStatuses(statusData, rootState.builders.currentBuilderId)
                 .then(
                     LotStatuses => {
                         // able to save lot statuses

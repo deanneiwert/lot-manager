@@ -15,6 +15,9 @@
             ></el-alert>
             <router-view></router-view>
         </main>
+        <footer>
+            <i>Copyright © {{thisYear}} Dean Neiwert</i>
+        </footer>
     </section>
 </template>
 <script>
@@ -32,6 +35,9 @@ export default {
     computed: {
         alert () {
             return this.$store.state.alert
+        },
+        thisYear () {
+            return new Date().getFullYear();
         }
     },
     watch: {
@@ -72,5 +78,11 @@ main.el-main {
     h1 {
         margin-bottom: 30px;
     }
+}
+
+footer {
+    margin: auto;
+    margin-bottom: 100px;
+    font-size: 12px;
 }
 </style>

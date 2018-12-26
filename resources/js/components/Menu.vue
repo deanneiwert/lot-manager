@@ -1,5 +1,4 @@
 <template>
-
     <el-menu
         mode="horizontal"
         background-color="#545c64"
@@ -24,6 +23,7 @@
             <el-menu-item index="admin.users" route="/admin/users">Users</el-menu-item>
             <el-menu-item index="admin.communities" route="/admin/communities">Communities</el-menu-item>
             <el-menu-item index="admin.lot-statuses" route="/admin/lot-statuses">Lot Status</el-menu-item>
+            <el-menu-item index="admin.lots" route="/admin/lots">Lots</el-menu-item>
         </el-submenu>
         <!-- AUTH -->
         <el-menu-item class="auth-nav" index="login" v-if="!user" route="/login">Login</el-menu-item>

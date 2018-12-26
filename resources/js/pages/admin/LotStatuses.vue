@@ -1,46 +1,45 @@
 <template>
     <div>
         <h1>Lot Status</h1>
-        <el-form
-            ref="form"
-            label-width="130px"
-        >
+        <el-form ref="form" label-width="130px">
             <el-form-item label="Filter by Builder">
-                <el-select :value="builderId" filterable placeholder="Select Builder" class="builders" @change="builderChange">
+                <el-select
+                    :value="builderId"
+                    filterable
+                    placeholder="Select Builder"
+                    class="builders"
+                    @change="builderChange"
+                >
                     <el-option
                         v-for="builder in builders"
                         :key="builder.id"
                         :label="builder.name"
-                        :value="builder.id">
-                    </el-option>
+                        :value="builder.id"
+                    ></el-option>
                 </el-select>
             </el-form-item>
         </el-form>
         <el-row>
-            <el-col :span="2">
-                &nbsp;
-            </el-col>
+            <el-col :span="2">&nbsp;</el-col>
             <el-col :span="4">
-                <div class="grid-content"><strong>Order</strong></div>
+                <div class="grid-content">
+                    <strong>Order</strong>
+                </div>
             </el-col>
             <el-col :span="18">
-                <div class="grid-content"><strong>Lot Status</strong></div>
+                <div class="grid-content">
+                    <strong>Lot Status</strong>
+                </div>
             </el-col>
         </el-row>
-        <div v-show="!lotStatuses" class="no-data">
-            No data
-        </div>
+        <div v-show="!lotStatuses" class="no-data">No data</div>
         <draggable v-model="lotStatuses" :options="{handle:'.drag-handle'}">
             <el-row type="flex" v-for="status in lotStatuses" :key="status.id">
                 <el-col :span="2">
-                    <img src="/images/drag-handle.png" class="drag-handle" />
+                    <img src="/images/drag-handle.png" class="drag-handle">
                 </el-col>
-                <el-col :span="4">
-                    {{status.order}}
-                </el-col>
-                <el-col :span="18">
-                    {{status.name}}
-                </el-col>
+                <el-col :span="4">{{status.order}}</el-col>
+                <el-col :span="18">{{status.name}}</el-col>
             </el-row>
         </draggable>
     </div>
@@ -55,66 +54,73 @@ export default {
     components: {
         draggable,
     },
-    data() {
+    data () {
         return {
-            
+
         }
     },
-    mounted() {
-        this.getBuilders();
+    mounted () {
+        // get the builders if empty
+        if (!this.builders) {
+            this.getBuilders();
+        }
+        // reset the lot statuses if we have the statuses for the wrong builder
+        else if (!this.lotStatuses || this.lotStatuses[0].builder_id !== this.builderId) {
+            this.getLotStatuses();
+        }
     },
     computed: {
         ...mapState({
-            builderId: state => state.lotStatuses.builderId
+            builderId: state => state.builders.currentBuilderId
         }),
-        builders() {
+        builders () {
             return this.$store.state.builders.builders;
         },
         lotStatuses: {
-            get() {
+            get () {
                 return this.$store.state.lotStatuses.lotStatuses;
             },
-            set(value){
+            set (value) {
                 this.$store.dispatch('lotStatuses/setLotStatuses', value);
             }
         }
     },
     methods: {
-        getBuilders() {
+        getBuilders () {
             this.$store.dispatch('builders/getBuilders');
         },
-        getLotStatuses() {
+        getLotStatuses () {
             this.$store.dispatch('lotStatuses/getLotStatuses');
         },
-        builderChange(value) {
-            this.$store.dispatch('lotStatuses/setBuilder', value);
+        builderChange (value) {
+            this.$store.dispatch('builders/setCurrentBuilder', value);
             this.getLotStatuses();
         },
     },
 }
 </script>
 <style lang="scss" scoped>
-.builders{
+.builders {
     width: 100%;
 }
-.el-row{
+.el-row {
     border-bottom: 1px solid #ebeef5;
     align-items: center;
 }
 
-.grid-content{
+.grid-content {
     min-height: 36px;
-} 
+}
 
-.drag-handle{
+.drag-handle {
     width: 36px;
 }
-.no-data{
+.no-data {
     padding: 30px;
     text-align: center;
     min-height: 36px;
 }
-.sortable-drag{
+.sortable-drag {
     background-color: yellow;
 }
 </style>

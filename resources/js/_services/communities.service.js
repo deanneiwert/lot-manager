@@ -1,21 +1,39 @@
 import axios from 'axios';
 import {
-    errorHandler, authHeader
+    errorHandler,
+    authHeader
 } from '../_helpers';
 
 export const communityService = {
     getCommunities,
+    getLots,
 };
 
 function getCommunities(options) {
-    return axios.get(`/communities/${options.pageSize}/${options.nameFilter}`, {
+    let builderId = options.builderId ? options.builderId : '';
+    let nameFilter = options.nameFilter ? options.nameFilter : '';
+    return axios.get(`/communities/${builderId}`, {
             params: {
-                page: options.page
+                page: options.page,
+                pageSize: options.pageSize,
+                nameFilter,
             },
             headers: authHeader(),
         })
         .then(response => {
             return response.data.communitiesChunk;
+        })
+        .catch(error => {
+            return errorHandler(error);
+        });
+}
+
+function getLots(communityId) {
+    return axios.get(`/communities/lots/${communityId}`, {
+            headers: authHeader(),
+        })
+        .then(response => {
+            return response.data.lots;
         })
         .catch(error => {
             return errorHandler(error);
