@@ -48,7 +48,7 @@ export default {
             rootState,
         }) {
             commit('getLotStatusesRequest');
-            lotStatusService.getLotStatuses(rootState.builders.currentBuilderId)
+            lotStatusService.getLotStatuses(rootState.builders.currentBuilder.id)
                 .then(
                     LotStatuses => {
                         commit('getLotStatusesSuccess', LotStatuses);
@@ -78,7 +78,7 @@ export default {
                     name: status.name
                 }
             });
-            lotStatusService.setLotStatuses(statusData, rootState.builders.currentBuilderId)
+            lotStatusService.setLotStatuses(statusData, rootState.builders.currentBuilder.id)
                 .then(
                     LotStatuses => {
                         // able to save lot statuses

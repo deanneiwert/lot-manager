@@ -8,7 +8,7 @@ export default {
     state: {
         status: {},
         builders: null,
-        currentBuilderId: null
+        currentBuilder: {},
     },
     mutations: {
         getBuildersRequest(state) {
@@ -38,27 +38,43 @@ export default {
             state.status = {
                 BuilderRetrieved: true
             };
-            // update the builder in the builder collection or append to he collection
+            // update the builder in the builder collection or append to the collection
             let builderIndex = state.builders.findIndex(b => b.id === Builder.id);
             if (builderIndex >= 0) {
-                Vue.set(state.builders, builderIndex, Builder)
+                Vue.set(state.builders, builderIndex, Builder);
             } else {
                 state.builder.push(Builder);
             }
+
+            // update the currently selected builder
+            state.currentBuilder = Builder;
         },
         getBuildersFailure(state) {
             state.status = {};
             state.builders = null;
         },
-        setBuilder(state, builderId) {
-            state.currentBuilderId = builderId;
+        setBuilderRequest(state, builderId) {
+            state.status = {
+                BuilderSet: true
+            }
+            state.currentBuilder = this.getters['builders/getBuilderById'](builderId);
         },
+    },
+    getters: {
+        getBuilderById: (state) => (id) => {
+            let builder = state.builders.find(builder => builder.id === id);
+            return builder ? builder : {}
+        },
+        getCommunityById: (state) => (id) => {
+            let community = state.currentBuilder.communities.find(community => community.id === id);
+            return community ? community : {}
+        }
     },
     actions: {
         setCurrentBuilder({
             commit
         }, builderId) {
-            commit('setBuilder', builderId);
+            commit('setBuilderRequest', builderId);
         },
         getBuilders({
             dispatch,

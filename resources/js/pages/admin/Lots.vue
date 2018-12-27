@@ -12,13 +12,18 @@
                 <el-cascader
                     :options="builders"
                     :props="props"
-                    expand-trigger="hover"
                     @change="builderOrCommunityChange"
                     filterable
                     :change-on-select="true"
                     v-model="form.builderAndCommunity"
                 ></el-cascader>
             </el-form-item>
+            <div v-show="communitySelected">
+                <el-form-item label="Community Location: ">
+                    <div>{{community.street_address}}</div>
+                    <div>{{community.city}}, {{community.state}} {{community.zip}}</div>
+                </el-form-item>
+            </div>
         </el-form>
 
         <el-table :data="lots">
@@ -65,40 +70,51 @@ export default {
         }
     },
     mounted () {
+        // see if we need to retrieve builders
         if (!this.builders || this.builders.length === 0) {
             this.getBuilders();
         }
-        this.form.builderAndCommunity = [this.builderId, this.communityId];
+
+        // check if current builder doesn't match current community
+        if (this.community && this.builder && this.community.builder_id != this.builder.id) {
+            // unset current community
+            this.$store.dispatch('communities/unsetCurrentCommunity');
+            this.$store.dispatch('communities/unsetLots');
+        }
+
+        // set default builder and community selection
+        this.form.builderAndCommunity = [this.builder.id, this.community.id];
     },
     computed: {
         ...mapState({
-            builderId: state => state.builders.currentBuilderId,
-            communityId: state => state.communities.currentCommunityId,
+            builder: state => state.builders.currentBuilder,
+            community: state => state.communities.currentCommunity,
             lots: state => state.communities.lots,
         }),
-
         builders () {
             let builders = this.$store.state.builders.builders;
             builders = builders ? builders : [];
             return builders;
         },
+        communitySelected () {
+            return !_.isEmpty(this.community);
+        }
     },
     methods: {
         getBuilders () {
             this.$store.dispatch('builders/getBuilders');
         },
         builderChange (value) {
-            // save this builder Id in our store
-            this.$store.dispatch('builders/setCurrentBuilder', value[0]);
-
             // get the index for the selected builder
             let builderIndex = this.builders.findIndex(b => b.id === value[0]);
 
             // if the builder doesn't have any communities, get the list
             if (builderIndex >= 0 && !this.builders[builderIndex].communities.length) {
                 this.$store.dispatch('builders/getBuilderDetail', value[0]);
-                // bug: if a builder doesn't have any communities, this will run every time that builder is hovered over
             }
+
+            // save this builder in our store)
+            this.$store.dispatch('builders/setCurrentBuilder', value[0]);
         },
         builderOrCommunityChange (value) {
             // check if this was a builder or community change
@@ -111,7 +127,7 @@ export default {
                 // builder change
                 this.builderChange(value);
             }
-        }
+        },
     },
 }
 </script>

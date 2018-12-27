@@ -65,16 +65,19 @@ export default {
             this.getBuilders();
         }
         // reset the lot statuses if we have the statuses for the wrong builder
-        else if (!this.lotStatuses || this.lotStatuses[0].builder_id !== this.builderId) {
+        else if (!this.lotStatuses || this.lotStatuses[0].builder_id !== this.builder.id) {
             this.getLotStatuses();
         }
     },
     computed: {
         ...mapState({
-            builderId: state => state.builders.currentBuilderId
+            builder: state => state.builders.currentBuilder
         }),
         builders () {
             return this.$store.state.builders.builders;
+        },
+        builderId () {
+            return this.builder ? this.builder.id : '';
         },
         lotStatuses: {
             get () {

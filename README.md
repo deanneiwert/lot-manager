@@ -9,7 +9,7 @@ Features include:
 4. Admin functions
     1. View all registered users
     2. View all communities
-    3. View all lots for a community
+    3. View all lots for each community
     4. View the lot status options for each builder
     5. Change the order of the lot status options
 

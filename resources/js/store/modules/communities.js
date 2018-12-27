@@ -9,7 +9,7 @@ export default {
         status: {},
         chunk: null,
         options: null,
-        currentCommunityId: null,
+        currentCommunity: {},
         lots: null
     },
     mutations: {
@@ -44,15 +44,35 @@ export default {
             state.status = {};
             state.lots = null;
         },
-        setCommunity(state, communityId) {
-            state.currentCommunityId = communityId;
+        setCommunityRequest(state, communityId) {
+            state.status = {
+                CommunitySet: true
+            }
+            state.currentCommunity = this.getters['builders/getCommunityById'](communityId);
         },
+        unsetCommunityRequest(state) {
+            state.status = {
+                CommunityUnset: true
+            }
+            state.currentCommunity = {};
+        },
+        unsetLotsRequest(state) {
+            state.status = {
+                LotsUnset: true
+            }
+            state.lots = null;
+        }
     },
     actions: {
         setCurrentCommunity({
             commit
         }, communityId) {
-            commit('setCommunity', communityId);
+            commit('setCommunityRequest', communityId);
+        },
+        unsetCurrentCommunity({
+            commit
+        }) {
+            commit('unsetCommunityRequest');
         },
         getCommunities({
             dispatch,
@@ -95,6 +115,11 @@ export default {
                         });
                     }
                 );
+        },
+        unsetLots({
+            commit
+        }) {
+            commit('unsetLotsRequest');
         }
     }
 }
