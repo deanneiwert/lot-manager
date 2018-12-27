@@ -84,7 +84,7 @@ export default {
             // if still not found, try to get from database
             // TO DO: make API call to community by ID (i.e. new route /communities/{communityId})
 
-            commit('setCommunityByIdRequest', community);
+            commit('setCommunityRequest', community);
         },
         setCurrentCommunity({
             commit

@@ -75,7 +75,7 @@ export default {
             let community = null;
 
             // try to get community from currentBuilder
-            if (!_.isEmpty(state.currentBuilder && state.currentBuilder.communities)) {
+            if (!_.isEmpty(state.currentBuilder) && state.currentBuilder.communities) {
                 community = state.currentBuilder.communities.find(community => community.id === id);
             }
 
