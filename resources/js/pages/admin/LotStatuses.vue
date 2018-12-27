@@ -96,7 +96,7 @@ export default {
             this.$store.dispatch('lotStatuses/getLotStatuses');
         },
         builderChange (value) {
-            this.$store.dispatch('builders/setCurrentBuilder', value);
+            this.$store.dispatch('builders/setCurrentBuilderById', value);
             this.getLotStatuses();
         },
     },

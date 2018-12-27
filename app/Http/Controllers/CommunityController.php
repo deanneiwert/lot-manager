@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 
 class CommunityController extends Controller
 {
-    public function index(Request $request, ?string $builderId = "") {
+    /**
+     * Get paginated community data including builder and assignment data
+     */
+    public function index(Request $request) {
 
         $pageSize = $request['pageSize'];
 
@@ -34,6 +37,9 @@ class CommunityController extends Controller
             ], 200);
     }
 
+    /**
+     * Get lots for passed in community id
+     */
     public function getLots(Request $request, string $communityId) {
         $community = Community::with('lots', 'lots.lotStatus')->where("id", $communityId)->first();
 

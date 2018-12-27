@@ -56,7 +56,16 @@ export default {
         }
     },
     getters: {
+        getCommunityById: (state) => (id) => {
+            let community = null;
 
+            // try to get community from user
+            if (!_.isEmpty(state.auth.user.builder) && state.auth.user.builder.communities) {
+                community = state.auth.user.builder.communities.find(community => community.id === id);
+            }
+
+            return community;
+        }
     },
     actions: {
         login({
@@ -71,11 +80,17 @@ export default {
                 .then(
                     user => {
                         commit('loginSuccess', user);
-                        if (user.role_id === 1){
-                            router.push({name: 'admin.dashboard'});
-                        }
-                        else {
-                            router.push({name: 'dashboard'});
+                        dispatch('builders/setCurrentBuilder', user.builder, {
+                            root: true
+                        });
+                        if (user.role_id === 1) {
+                            router.push({
+                                name: 'admin.dashboard'
+                            });
+                        } else {
+                            router.push({
+                                name: 'dashboard'
+                            });
                         }
                     },
                     error => {

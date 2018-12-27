@@ -114,13 +114,13 @@ export default {
             }
 
             // save this builder in our store)
-            this.$store.dispatch('builders/setCurrentBuilder', value[0]);
+            this.$store.dispatch('builders/setCurrentBuilderById', value[0]);
         },
         builderOrCommunityChange (value) {
             // check if this was a builder or community change
             if (value.length > 1 && value[1]) {
                 // community change
-                this.$store.dispatch('communities/setCurrentCommunity', value[1]);
+                this.$store.dispatch('communities/setCurrentCommunityById', value[1]);
                 this.$store.dispatch('communities/getLots', value[1]);
             }
             else {

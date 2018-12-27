@@ -28,6 +28,9 @@ class AuthController extends Controller
         return $this->login($request);
     }
 
+    /**
+     * Login user and grab builder and community detail as well
+     */
     public function login(Request $request) {
         $v = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -39,8 +42,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if ($token = $this->guard()->attempt($credentials)) {
             $user = Auth::getUser();
-            $user->load('role');
-            $user->load('builder');
+            $user->load('role', 'builder', 'builder.communities','communityAssignment','communityAssignment.community');
             $user->token = $token;
             return response()->json($user, 200);
         }

@@ -7,7 +7,7 @@ class LotsTableSeeder extends Seeder
 {
 
     const MAX_LOT_COUNT = 20;
-    const MIN_LOT_COUNT = 0;
+    const MIN_LOT_COUNT = 1;
 
     /**
      * Run the database seeds.

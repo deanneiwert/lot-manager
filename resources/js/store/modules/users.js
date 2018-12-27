@@ -30,7 +30,7 @@ export default {
         getUsersFailure(state) {
             state.status = {};
             state.chunk = null;
-        }
+        },
     },
     actions: {
         getUsers({

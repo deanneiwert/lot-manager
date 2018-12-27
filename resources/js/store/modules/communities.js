@@ -7,7 +7,7 @@ export default {
     namespaced: true,
     state: {
         status: {},
-        chunk: null,
+        chunk: {},
         options: null,
         currentCommunity: {},
         lots: null
@@ -44,11 +44,17 @@ export default {
             state.status = {};
             state.lots = null;
         },
-        setCommunityRequest(state, communityId) {
+        setCommunityByIdRequest(state, communityId) {
             state.status = {
                 CommunitySet: true
             }
             state.currentCommunity = this.getters['builders/getCommunityById'](communityId);
+        },
+        setCommunityRequest(state, community) {
+            state.status = {
+                CommunitySet: true
+            }
+            state.currentCommunity = community;
         },
         unsetCommunityRequest(state) {
             state.status = {
@@ -64,10 +70,26 @@ export default {
         }
     },
     actions: {
-        setCurrentCommunity({
+        setCurrentCommunityById({
             commit
         }, communityId) {
-            commit('setCommunityRequest', communityId);
+            // try to get community from builders store
+            let community = this.getters['builders/getCommunityById'](communityId);
+
+            // if not found, try to get from auth store
+            if (!community) {
+                community = this.getters['auth/getCommunityById'](communityId);
+            }
+
+            // if still not found, try to get from database
+            // TO DO: make API call to community by ID (i.e. new route /communities/{communityId})
+
+            commit('setCommunityByIdRequest', community);
+        },
+        setCurrentCommunity({
+            commit
+        }, community) {
+            commit('setCommunityRequest', community);
         },
         unsetCurrentCommunity({
             commit

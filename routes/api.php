@@ -25,9 +25,10 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::group(['middleware' => 'auth:api'], function(){
-    Route::get('users/{pageSize}/{nameFilter?}', 'UserController@index')->middleware('isAdmin');
+    Route::get('users', 'UserController@index')->middleware('isAdmin');
+    Route::get('users/{userId}', 'UserController@getUser')->middleware('isAdmin');
     Route::get('communities', 'CommunityController@index')->middleware('isAdmin');
-    Route::get('communities/lots/{communityId}', 'CommunityController@getLots')->middleware('isAdmin');
+    Route::get('communities/lots/{communityId}', 'CommunityController@getLots');
     Route::get('builders', 'BuilderController@index')->middleware('isAdmin');
     Route::get('builders/{builderId}', 'BuilderController@getBuilder')->middleware('isAdmin');
     Route::get('lotStatuses/{builderId}', 'LotStatusController@index')->middleware('isAdmin');

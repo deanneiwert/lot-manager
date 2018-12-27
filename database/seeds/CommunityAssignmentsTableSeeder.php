@@ -14,10 +14,10 @@ class CommunityAssignmentsTableSeeder extends Seeder
     {
         // go through all the users
         App\User::all()->each(function($user) {
-            
+
             // get the list of communities associated with the user's builder
             $communities = App\Community::where('builder_id', $user->builder_id)->get();
-            
+
             // if at least one community found
             if($communities->count() > 0){
 

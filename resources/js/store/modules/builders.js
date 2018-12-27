@@ -53,11 +53,17 @@ export default {
             state.status = {};
             state.builders = null;
         },
-        setBuilderRequest(state, builderId) {
+        setBuilderByIdRequest(state, builderId) {
             state.status = {
                 BuilderSet: true
             }
             state.currentBuilder = this.getters['builders/getBuilderById'](builderId);
+        },
+        setBuilderRequest(state, builder) {
+            state.status = {
+                BuilderSet: true
+            }
+            state.currentBuilder = builder;
         },
     },
     getters: {
@@ -66,15 +72,26 @@ export default {
             return builder ? builder : {}
         },
         getCommunityById: (state) => (id) => {
-            let community = state.currentBuilder.communities.find(community => community.id === id);
-            return community ? community : {}
+            let community = null;
+
+            // try to get community from currentBuilder
+            if (!_.isEmpty(state.currentBuilder && state.currentBuilder.communities)) {
+                community = state.currentBuilder.communities.find(community => community.id === id);
+            }
+
+            return community;
         }
     },
     actions: {
-        setCurrentBuilder({
+        setCurrentBuilderById({
             commit
         }, builderId) {
-            commit('setBuilderRequest', builderId);
+            commit('setBuilderByIdRequest', builderId);
+        },
+        setCurrentBuilder({
+            commit
+        }, builder) {
+            commit('setBuilderRequest', builder);
         },
         getBuilders({
             dispatch,

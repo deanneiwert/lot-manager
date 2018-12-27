@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
-    errorHandler, authHeader
+    errorHandler,
+    authHeader
 } from '../_helpers';
 
 export const userService = {
@@ -52,9 +53,11 @@ function logout() {
 }
 
 function getUsers(options) {
-    return axios.get(`/users/${options.pageSize}/${options.nameFilter}`, {
+    return axios.get('/users', {
             params: {
-                page: options.page
+                page: options.page,
+                pageSize: options.pageSize,
+                nameFilter: options.nameFilter,
             },
             headers: authHeader(),
         })

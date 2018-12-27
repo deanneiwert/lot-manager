@@ -14,18 +14,19 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         factory(App\User::class, 500)->create();
+        // create 1 admin we can use to login
         User::create([
             'name' => 'Admin',
             'email' => 'admin@test.com',
             'password' => Hash::make('admin'),
             'role_id' => 1
         ]);
-        User::create([
-            'name' => 'Sales Agent',
+        // create 1 sales agent we can use to login
+        factory(App\User::class, 1)->create([
             'email' => 'sales@test.com',
             'password' => Hash::make('sales'),
-            'role_id' => 2
         ]);
+        // create 1 sales maanger we can use to login
         User::create([
             'name' => 'Sales Manager',
             'email' => 'manager@test.com',

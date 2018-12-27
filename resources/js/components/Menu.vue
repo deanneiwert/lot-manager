@@ -15,6 +15,7 @@
         <el-submenu v-if="roleCheck(2)" index="user">
             <template slot="title">Sales Agent</template>
             <el-menu-item index="dashboard">Dashboard</el-menu-item>
+            <el-menu-item index="lots" route="/lots">Lots</el-menu-item>
         </el-submenu>
         <!--ADMIN -->
         <el-submenu v-if="roleCheck(1)" index="admin">

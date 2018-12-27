@@ -9,7 +9,8 @@ import AdminDashboard from './pages/admin/Dashboard';
 import Users from './pages/admin/Users';
 import Communities from './pages/admin/Communities';
 import LotStatuses from './pages/admin/LotStatuses';
-import Lots from './pages/admin/Lots';
+import AdminLots from './pages/admin/Lots';
+import Lots from './pages/user/Lots';
 import _401 from './pages/401';
 import _404 from './pages/404';
 import store from './store';
@@ -52,6 +53,14 @@ const routes = [{
             auth: true
         }
     },
+    {
+        path: '/lots',
+        name: 'lots',
+        component: Lots,
+        meta: {
+            auth: true
+        }
+    },
     // ADMIN ROUTES
     {
         path: '/admin',
@@ -84,7 +93,7 @@ const routes = [{
             }, {
                 path: 'lots',
                 name: 'admin.lots',
-                component: Lots,
+                component: AdminLots,
             }
         ]
     },
