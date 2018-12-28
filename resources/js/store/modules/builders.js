@@ -2,14 +2,17 @@ import {
     builderService
 } from '../../_services';
 
-
-export default {
-    namespaced: true,
-    state: {
+const defaultState = () => {
+    return {
         status: {},
         builders: null,
         currentBuilder: {},
-    },
+    }
+};
+
+export default {
+    namespaced: true,
+    state: defaultState(),
     mutations: {
         getBuildersRequest(state) {
             state.status = {
@@ -65,6 +68,9 @@ export default {
             }
             state.currentBuilder = builder;
         },
+        clearRequest(state) {
+            Object.assign(state, defaultState());
+        },
     },
     getters: {
         getBuilderById: (state) => (id) => {
@@ -83,6 +89,11 @@ export default {
         }
     },
     actions: {
+        clear({
+            commit
+        }) {
+            commit('clearRequest');
+        },
         setCurrentBuilderById({
             commit
         }, builderId) {

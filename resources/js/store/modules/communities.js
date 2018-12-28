@@ -2,16 +2,19 @@ import {
     communityService
 } from '../../_services';
 
-
-export default {
-    namespaced: true,
-    state: {
+const defaultState = () => {
+    return {
         status: {},
         chunk: {},
         options: null,
         currentCommunity: {},
         lots: null
-    },
+    }
+};
+
+export default {
+    namespaced: true,
+    state: defaultState(),
     mutations: {
         getCommunitiesRequest(state, options) {
             state.status = {
@@ -67,9 +70,17 @@ export default {
                 LotsUnset: true
             }
             state.lots = null;
-        }
+        },
+        clearRequest(state) {
+            Object.assign(state, defaultState());
+        },
     },
     actions: {
+        clear({
+            commit
+        }) {
+            commit('clearRequest');
+        },
         setCurrentCommunityById({
             commit
         }, communityId) {

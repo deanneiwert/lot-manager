@@ -61,7 +61,7 @@ export default {
     },
     mounted () {
         // get the builders if empty
-        if (!this.builders) {
+        if (_.isEmpty(this.builder)) {
             this.getBuilders();
         }
         // reset the lot statuses if we have the statuses for the wrong builder
@@ -77,7 +77,7 @@ export default {
             return this.$store.state.builders.builders;
         },
         builderId () {
-            return this.builder ? this.builder.id : '';
+            return !_.isEmpty(this.builder) && this.builder.id ? this.builder.id : '';
         },
         lotStatuses: {
             get () {

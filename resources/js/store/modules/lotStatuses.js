@@ -2,13 +2,16 @@ import {
     lotStatusService
 } from '../../_services';
 
+const defaultState = () => {
+    return {
+        status: {},
+        lotStatuses: null,
+    }
+};
 
 export default {
     namespaced: true,
-    state: {
-        status: {},
-        lotStatuses: null,
-    },
+    state: defaultState(),
     mutations: {
         getLotStatusesRequest(state) {
             state.status = {
@@ -40,8 +43,16 @@ export default {
             state.status = {};
             state.lotStatuses = originalStates;
         },
+        clearRequest(state) {
+            Object.assign(state, defaultState());
+        },
     },
     actions: {
+        clear({
+            commit
+        }) {
+            commit('clearRequest');
+        },
         getLotStatuses({
             dispatch,
             commit,

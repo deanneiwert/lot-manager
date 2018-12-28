@@ -124,10 +124,28 @@ export default {
                 );
         },
         logout({
+            dispatch,
             commit
         }) {
             userService.logout();
+
+            // clear out all stores
             commit('logout');
+            dispatch('alert/clear', '', {
+                root: true
+            });
+            dispatch('builders/clear', '', {
+                root: true
+            });
+            dispatch('communities/clear', '', {
+                root: true
+            });
+            dispatch('lotStatuses/clear', '', {
+                root: true
+            });
+            dispatch('users/clear', '', {
+                root: true
+            });
         },
     },
 };

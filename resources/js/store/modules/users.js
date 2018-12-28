@@ -2,10 +2,8 @@ import {
     userService
 } from '../../_services';
 
-
-export default {
-    namespaced: true,
-    state: {
+const defaultState = () => {
+    return {
         status: {},
         chunk: null,
         options: {
@@ -13,7 +11,12 @@ export default {
             nameFilter: '',
             page: 1,
         },
-    },
+    }
+};
+
+export default {
+    namespaced: true,
+    state: defaultState(),
     mutations: {
         getUsersRequest(state, options) {
             state.status = {
@@ -31,8 +34,16 @@ export default {
             state.status = {};
             state.chunk = null;
         },
+        clearRequest(state) {
+            Object.assign(state, defaultState());
+        },
     },
     actions: {
+        clear({
+            commit
+        }) {
+            commit('clearRequest');
+        },
         getUsers({
             dispatch,
             commit
