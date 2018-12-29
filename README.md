@@ -6,12 +6,15 @@ Features include:
 1. Login as admin or sales agent
 2. Logoff
 3. Register as sales agent
-4. Admin functions
+4. Admin functions:
     1. View all registered users
     2. View all communities
     3. View all lots for each community
     4. View the lot status options for each builder
     5. Change the order of the lot status options
+5. Sales Agent functions:
+    1. View all lots for each community
+    2. Edit the lot status for each lot
 
 
 Implemented with Vue, Vue-Router, Axios, Vuex, Php, Laravel (with Eloquent), Element-UI, SASS

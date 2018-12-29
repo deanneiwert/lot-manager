@@ -71,6 +71,26 @@ export default {
             }
             state.lots = null;
         },
+        saveLotRequest(state) {
+            state.status = {
+                savingLot: true
+            }
+        },
+        saveLotSuccess(state, lot) {
+            state.status = {
+                lotSaved: true
+            }
+            // update the lot in the lots collection or append to the collection
+            let lotIndex = state.lots.findIndex(l => l.id === lot.id);
+            if (lotIndex >= 0) {
+                Vue.set(state.lots, lotIndex, lot);
+            } else {
+                state.lots.push(lot);
+            }
+        },
+        saveLotFailure(state) {
+            state.status = {};
+        },
         clearRequest(state) {
             Object.assign(state, defaultState());
         },
@@ -153,6 +173,27 @@ export default {
             commit
         }) {
             commit('unsetLotsRequest');
-        }
+        },
+        saveLot({
+            dispatch,
+            commit
+        }, lot) {
+            commit('saveLotRequest');
+            communityService.saveLot(lot)
+                .then(
+                    updatedLot => {
+                        commit('saveLotSuccess', updatedLot);
+                        dispatch('alert/clear', '', {
+                            root: true
+                        });
+                    },
+                    error => {
+                        commit('saveLotFailure');
+                        dispatch('alert/error', error.message, {
+                            root: true
+                        });
+                    }
+                );
+        },
     }
 }

@@ -7,6 +7,7 @@ import {
 export const communityService = {
     getCommunities,
     getLots,
+    saveLot,
 };
 
 function getCommunities(options) {
@@ -34,6 +35,28 @@ function getLots(communityId) {
         })
         .then(response => {
             return response.data.lots;
+        })
+        .catch(error => {
+            return errorHandler(error);
+        });
+}
+
+function saveLot({
+    id,
+    lot_number,
+    lot_status_id,
+    street_address
+}) {
+    return axios.post('/communities/saveLot', {
+            id,
+            lot_number,
+            lot_status_id,
+            street_address,
+        }, {
+            headers: authHeader(),
+        })
+        .then(response => {
+            return response.data.lot;
         })
         .catch(error => {
             return errorHandler(error);

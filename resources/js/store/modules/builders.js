@@ -86,7 +86,7 @@ export default {
             }
 
             return community;
-        }
+        },
     },
     actions: {
         clear({

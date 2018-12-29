@@ -59,7 +59,18 @@ export default {
             rootState,
         }) {
             commit('getLotStatusesRequest');
-            lotStatusService.getLotStatuses(rootState.builders.currentBuilder.id)
+
+            // get builderId from currentBuilder in builders store,
+            // if not found, get it from auth store and set currentBuilder
+            let builderId = rootState.builders.currentBuilder.id;
+            if (!builderId) {
+                builderId = rootState.auth.user.builder_id;
+                dispatch('builders/setCurrentBuilder', rootState.auth.user.builder, {
+                    root: true
+                });
+            }
+
+            lotStatusService.getLotStatuses(builderId)
                 .then(
                     LotStatuses => {
                         commit('getLotStatusesSuccess', LotStatuses);
