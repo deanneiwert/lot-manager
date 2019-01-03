@@ -52,7 +52,8 @@ export default {
 <style lang="scss">
 @import "resources/sass/app.scss";
 nav,
-main {
+main,
+footer {
     max-width: 1100px;
     margin: auto;
 }
@@ -81,7 +82,8 @@ main.el-main {
 }
 
 footer {
-    margin: auto;
+    width: 100%;
+    text-align: center;
     margin-bottom: 100px;
     font-size: 12px;
 }

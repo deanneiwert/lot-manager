@@ -13,7 +13,7 @@ Features include:
     4. View the lot status options for each builder
     5. Change the order of the lot status options
 5. Sales Agent functions:
-    1. View all lots for each community
+    1. View all lots for each assigned community
     2. Edit the lot status for each lot
 
 

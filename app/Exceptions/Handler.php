@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -49,15 +50,25 @@ class Handler extends ExceptionHandler
         // handle the error differently when dealing with ajax requests
         if ($request->ajax() || $request->wantsJson())
         {
+            $code = 500;
+            $message = "Unknown error occurred";
+
+            // change response code if authentication exception
+            if($exception instanceof AuthenticationException){
+                $code = 401;
+                $message = "Not logged in";
+            }
+
             $json = [
                 'success' => false,
-                'code' => $exception->getCode(),
+                'code' => $code,
                 'devMessage' => $exception->getMessage(),
-                'message' => 'Unknown error occurred',
+                'message' => $message,
             ];
 
-            return response()->json($json, 500);
+            return response()->json($json, $code);
         }
         return parent::render($request, $exception);
     }
+
 }

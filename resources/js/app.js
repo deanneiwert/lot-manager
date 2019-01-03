@@ -1,5 +1,5 @@
 import 'es6-promise/auto';
-import Axios from 'axios';
+import axios from 'axios';
 import './bootstrap';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -19,10 +19,26 @@ Vue.use(ElementUI, {
 });
 
 // Set Vue router
-Vue.router = router
-Vue.use(VueRouter)
+Vue.router = router;
+Vue.use(VueRouter);
 
 axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api`
+
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+    console.log(response.data.token);
+    // Do something with response data
+    return response;
+}, function (error) {
+    if (error.response.status === 401) {
+
+        store.dispatch('auth/logout');
+        router.push("/login");
+    }
+    // Do something with response error
+    return Promise.reject(error);
+});
+
 
 // Load Index
 Vue.component('index', Index)
