@@ -28,7 +28,7 @@ Implemented with Vue, Vue-Router, Axios, Vuex, Php, Laravel (with Eloquent), Ele
 4. [Laravel](https://laravel.com/)
 5. [NPM](https://www.npmjs.com/get-npm)
 
-### Download/Clone Repository
+### Download/Clone Repository:
 Either manually download this folder structure onto your system or use git to clone the repository.
 
 ### Database Configuration:
@@ -41,8 +41,8 @@ DB_USERNAME=admin
 DB_PASSWORD=admin
 ```
 
-### Install Php Libraries
-import your packages, create the vendor folder, and geneate the autoload.php script.
+### Install Php Libraries:
+import your packages, create the vendor folder, and generate the autoload.php script.
 ```
 composer install
 ```
@@ -72,7 +72,7 @@ npm run watch
 php artisan serve
 ```
 
-### Logging in
+### Logging in:
 
 #### Login as Admin
 1. Navigate to http://locahost:8000/
